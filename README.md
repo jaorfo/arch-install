@@ -1,4 +1,4 @@
-# Arch Linux Installation and setup
+# Arch Linux Installation (UEFI/BIOS) and Setup - Xfce Desktop Environment
 
 ## Preparation
 - Download [Arch Linux ISO](https://archlinux.org/download/)
