@@ -1,5 +1,11 @@
 # Arch Linux Installation and setup
 
+## Preparation
+- Download [Arch Linux ISO](https://archlinux.org/download/)
+- Make a booteable pendrive using some software. Like [Balena Etcher](https://www.balena.io/etcher/) 
+- Connect the booteable pendrive to your PC and then boot from it
+
+## First steps
 - loadkeys es
 - ping 8.8.8.8
 
