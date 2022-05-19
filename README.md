@@ -264,7 +264,6 @@ Password:
 Password: 
 ```
 - Enable Network Manager
-- Change to root login
 ```console
 [root@your_host_name your_user_name]# systemctl start NetworkManager
 [root@your_host_name your_user_name]# systemctl enable NetworkManager
@@ -310,11 +309,24 @@ Created symlink /etc/systemd/system/network-online.target.wants/NetworkManager-w
 ```
 
 ## Graphical Environment (UEFI & BIOS)
-- pacman -S --needed xorg xfce4 xfce4-goodies lightdm-gtk-greeter lightdm-gtk-greeter-settings
-- systemctl enable lightdm-gtk-greeter
-- reboot 
+#### Note: This is for Xfce Desktop. Feel free to choose what GE you want (Gnome, KDE, Cinnamon, etc)
+- Install Xfce4, Lightdm and useful apps
+```console
+[root@your_host_name your_user_name]# pacman -S --needed xorg xfce4 xfce4-goodies lightdm lightdm-gtk-greeter lightdm-gtk-greeter-settings gvfs git libreoffice-still vlc vim neovim transmission-gtk okular gimp
+```
+- Enable DM
+```console
+[root@your_host_name your_user_name]# systemctl enable lightdm
+```
+- Reboot 
+```console
+[root@your_host_name your_user_name]# reboot
+```
 
-Others
-- sudo pacman -S gvfs git libreoffice-still vlc vim neovim transmission-gtk okular gimp calibre
+# More configurations after your first login in Xfce
+## Bluetooth
 
-yay, bluetooth, pulseaudio
+## Pulse Audio
+
+## AUR repositories
+
