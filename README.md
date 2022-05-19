@@ -26,7 +26,7 @@ root@archiso# ip link
 ```console
 root@archiso# ip link set wlan0 up
 ```
-- Configure wifi
+- Configure wifi (essid: network name, password: network password)
 ```console
 root@archiso# wpa_passphrase essid password > /etc/wifiConfig
 root@archiso# wpa_supplicant -B -i wlan0 -D wext -c /etc/wifiConfig
@@ -251,17 +251,65 @@ root@archiso# reboot
 ```
 
 ## Wifi Configuration (UEFI & BIOS)
-- su
-- systemctl start NetworkManager
-- systemctl enable NetworkManager
-- ip link set wlan up
-- nmcli dev wifi connect essid password your_password
+- Enter your user name to login
+```console
+Arch Linux 5.17.1-arch1-1 (tty1)
 
-Drivers (UEFI & BIOS)
-- lspci | grep VGA
-- pacman -S xf86-video-nouveau (nvidia) xf86-video-amd (amd) xf86-video-intel intel-ucode (intel) 
+your_host_name login:
+Password:
+```
+- Change to root login
+```console
+[your_user_name@your_host_name ~ ]$ su
+Password: 
+```
+- Enable Network Manager
+- Change to root login
+```console
+[root@your_host_name your_user_name]# systemctl start NetworkManager
+[root@your_host_name your_user_name]# systemctl enable NetworkManager
+Created symlink /etc/systemd/system/multi-user.target.wants/NetworkManager.service -> /usr/lib/systemd/system/NetworkManager.service
+Created symlink /etc/systemd/system/dbus-org.freedesktop.nm-dispatcher.service -> /usr/lib/systemd/system/NetworkManager-dispatcher.service
+Created symlink /etc/systemd/system/network-online.target.wants/NetworkManager-wait-online.service -> /usr/lib/systemd/system/NetworkManager-wait-online.service
+```
+- Get the wifi adapter name (wlp0s9j1 in this example)
+```console
+[root@your_host_name your_user_name]#ip link
+1: lo: <LOOPBACK,UP,LOWER_UP> mtu 65536 qdisc noqueue state UNKNOWN mode DEFAULT group default qlen 1000
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+2: wlp0s9j1: <NO-CARRIER,BROADCAST,MULTICAST,UP> mtu 1500 qdisc noqueue state DOWN mode DORMANT group default qlen 1000
+    link/ether g2:gb:6g:6g:g3:g9 brd ff:ff:ff:ff:ff:ff permaddr f4:fg:gd:d6:97:gg
+```
+- Set the wifi adapter up (wlp0s9j1 in this example)
+```console
+[root@your_host_name your_user_name]# ip link set wlp0s9j1 up
+```
+- Connet to wifi (essid: network name, your_password: network password)
+```console
+[root@your_host_name your_user_name]# nmcli dev wifi connect essid password your_password
+```
 
-Graphical Environment (UEFI & BIOS)
+## Drivers (UEFI & BIOS)
+- Check video controllers (in this example: Intel Graphics)
+```console
+[root@your_host_name your_user_name]# lspci | grep VGA
+00:02.0 VGA compatible controller: Intel Corporation Xeon E3-1200 v3/4th Gen Core Processor Integrated Graphics Controller (rev 06)
+```
+- According to the output of the previous step, install one of this video cotrollers:
+- `NVIDIA`
+```console
+[root@your_host_name your_user_name]# pacman -S xf86-video-nouveau
+```
+- `INTEL`
+```console
+[root@your_host_name your_user_name]# pacman -S xf86-video-intel intel-ucode
+```
+- `AMD/ATI` [IMPORTANT for AMD troubleshooting](https://wiki.archlinux.org/title/AMDGPU)
+```console
+[root@your_host_name your_user_name]# pacman -S xf86-video-amdgpu
+```
+
+## Graphical Environment (UEFI & BIOS)
 - pacman -S --needed xorg xfce4 xfce4-goodies lightdm-gtk-greeter lightdm-gtk-greeter-settings
 - systemctl enable lightdm-gtk-greeter
 - reboot 
