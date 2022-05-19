@@ -1,3 +1,5 @@
+<img src="https://github.com/orfoja/img/blob/main/archlogo.png?raw=true" alt="archlinux" style="width:200px;"/>
+
 # Arch Linux Installation (UEFI/BIOS) and Setup - Xfce Desktop Environment
 
 ## Preparation
