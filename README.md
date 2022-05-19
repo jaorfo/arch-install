@@ -294,7 +294,7 @@ Created symlink /etc/systemd/system/network-online.target.wants/NetworkManager-w
 [root@your_host_name your_user_name]# lspci | grep VGA
 00:02.0 VGA compatible controller: Intel Corporation Xeon E3-1200 v3/4th Gen Core Processor Integrated Graphics Controller (rev 06)
 ```
-- According to the output of the previous step, install one of this video cotrollers:
+#### According to the output of the previous step, install one of this video cotrollers:
 - `NVIDIA`
 ```console
 [root@your_host_name your_user_name]# pacman -S xf86-video-nouveau
