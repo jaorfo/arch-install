@@ -324,9 +324,47 @@ Created symlink /etc/systemd/system/network-online.target.wants/NetworkManager-w
 ```
 
 # More configurations after your first login in Xfce
-## Bluetooth
+## Bluetooth - [Official Doc](https://wiki.archlinux.org/title/Bluetooth)
+- Install bluetooth
+```console
+[your_user_name@your_host_name ~]$ sudo pacman -S bluez bluez-utils blueman
+```
+- Edit bluetooth configuration
+```console
+[your_user_name@your_host_name ~]$ sudo nano /etc/bluetooth/main.conf
+```
+- Set AutoEnable to true
+<img src="https://github.com/orfoja/img/blob/main/arch-bluetooth.jpg?raw=true" alt="archlinux" style="width:600px;"/>
 
-## Pulse Audio
+- Enable bluetooth
+```console
+[your_user_name@your_host_name ~]$ sudo systemctl start bluetooth
+[your_user_name@your_host_name ~]$ sudo systemctl enable bluetooth
+```
+
+## Audio - [Official Doc](https://wiki.archlinux.org/title/PulseAudio)
+- Install audio
+```console
+[your_user_name@your_host_name ~]$ sudo pacman -S pulseaudio pulseaudio-bluetooth pavucontrol
+```
+- Start Pluse Audio
+```console
+[your_user_name@your_host_name ~]$ sudo systemctl start pulseaudio
+```
 
 ## AUR repositories
-
+- Install base-devel
+```console
+[your_user_name@your_host_name ~]$ sudo pacman -S base-devel
+```
+- Download yay
+```console
+[your_user_name@your_host_name ~]$ cd /opt
+[your_user_name@your_host_name ~]$ sudo git clone https://aur.archlinux.org/yay.git
+```
+- Configure yay (to know your user group: `id your_user_name`)
+```console
+[your_user_name@your_host_name ~]$ sudo chown -R your_user_name:your_user_group ./yay
+[your_user_name@your_host_name ~]$ cd yay
+[your_user_name@your_host_name ~]$ makepkg -si
+```
