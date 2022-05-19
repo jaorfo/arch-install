@@ -65,7 +65,7 @@ file or directory does not exist
 
 
 ## Partitions (UEFI)
-- Run to enter the partition manager. If a menu shows up, choose GPT option
+- Run to enter the partition manager (if a menu shows up, choose GPT option)
 ```console
 root@archiso# cfdisk
 ```
@@ -94,7 +94,7 @@ root@archiso# /dev/sda1 /mnt/boot/efi
 ```
 
 ## Partitions (BIOS)
-- Run to enter the partition manager. If a menu shows up, choose DOS option
+- Run to enter the partition manager (if a menu shows up, choose DOS option)
 ```console
 root@archiso# cfdisk
 ```
@@ -147,18 +147,41 @@ root@archiso# cat /mnt/etc/fstab
 ...
 ```
 
-## Configuration (UEFI & BIOS)
-- arch-chroot /mnt
-- echo YourPCName > /etc/hostname
-- ln -sf /usr/share/zoneinfo/America/Argentina /etc/localtime
-- nano /etc/locale.gen
-- choose: es_AR.UTF8 UTF8
-- locale-gen
-- hwclock -w
-- echo KEYMAP=es > /etc/wconsole.conf
-- echo LANG=es_AR.UTF8 > /etc/locale.conf
+## Host, Clock and Locale configurations (UEFI & BIOS)
+- Mount the filesystem
+```console
+root@archiso# arch-chroot /mnt
+```
+- Set Host name (whatever name you choose)
+```console
+root@archiso# echo your_host_name > /etc/hostname
+```
+- Set localtime (choose yours, this is an example with Argentina)
+```console
+root@archiso# ln -sf /usr/share/zoneinfo/America/Argentina/Buenos_Aires /etc/localtime
+```
+- Set keyword distribution
+```console
+root@archiso# nano /etc/locale.gen
+```
+- Uncomment the distribution you want (in this example: es_AR.UTF8 UTF8)
 
-Installing GRUB (UEFI)
+- Save file pressing `Ctrl+O` and `Ctrl+X` to exit
+- Execute to generate locale:
+```console
+root@archiso# locale-gen
+```
+- Set Clock
+```console
+root@archiso# hwclock -w
+```
+- Set language (again, this is an example with Argentina)
+```console
+root@archiso# echo KEYMAP=es > /etc/wconsole.conf
+root@archiso# echo LANG=es_AR.UTF8 > /etc/locale.conf
+```
+
+## Installing GRUB (UEFI)
 - grub-install --efi-directory=/boot/efi --bootloader -id='Arch Linux' --target=x86_64-efi
 
 Installing GRUB (BIOS)
