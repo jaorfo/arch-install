@@ -69,51 +69,83 @@ root@archiso# cfdisk
 ```
 - Basic partitions
 
-|Partition | Size              | Type             |
-| -------- | ----------------- | ---------------- |
-| BOOT     | 512M              | EFI System       |
-| SWAP     | Double RAM        | Linux swap       | 
-| SYSTEM   | Rest of your GB   | Linux filesystem |
+| Partition | Size              | Id Type          |
+| --------- | ----------------- | ---------------- |
+| BOOT      | 512M              | EFI System       |
+| SWAP      | Double RAM        | Linux swap       | 
+| SYSTEM    | Rest of your GB   | Linux filesystem |
 
-## Formatting (UEFI)
-- mkfs.vfat -F32 /dev/sda1
-- mkfs.ext4 /dev/sda2
-- mkswap /dev/sda3
-- swapon
+## Format (UEFI)
+```console
+root@archiso# mkfs.vfat -F32 /dev/sda1
+root@archiso# mkfs.ext4 /dev/sda2
+root@archiso# mkswap /dev/sda3
+root@archiso# swapon
+```
 
-Mounting
-- mount /dev/sda2 /mnt
-- mkdir /mnt/boot
-- mkdir /mnt/boot/efi
-- mount /dev/sda1 /mnt/boot/efi
+## Mount (UEFI)
+```console
+root@archiso# /dev/sda2 /mnt
+root@archiso# /mnt/boot
+root@archiso# /mnt/boot/efi
+root@archiso# /dev/sda1 /mnt/boot/efi
+```
 
-Partitions
-BIOS
-- cfdisk
-- if show = dos
-- new 512 -> primary -> Booteable -> Type -> 83 Linux -> Write
-- new double RAM -> primary -> Type -> 82 Linux swap -> Write
-- rest -> primary -> 83 Linux -> Write
+## Partitions (BIOS)
+- Run to enter the partition manager. If a menu shows up, choose DOS option
+```console
+root@archiso# cfdisk
+```
+- Basic partitions
 
-Formatting
-- mkfs.ext2 /dev/sda1
-- mkfs.ext4 /dev/sda2
-- mkswap /dev/sda3
-- swapon
+| Partition | Type     | Size              | Id Type          |
+| --------- | -------- | ----------------- | ---------------- |
+| BOOTEABLE | Primary  | 512M              | 83 Linux         |
+| SWAP      | Primary  | Double RAM        | 82 Linux swap    | 
+| SYSTEM    | Primary  | Rest of your GB   | 83 Linux         |
 
-Mounting
-- mount /dev/sda2 /mnt
-- mkdir /mnt/boot
-- mount /dev/sda1 /mnt/boot
+## Format (BIOS)
+```console
+root@archiso# mkfs.ext2 /dev/sda1
+root@archiso# mkfs.ext4 /dev/sda2
+root@archiso# mkswap /dev/sda3
+root@archiso# swapon
+```
 
-Installing basic packages (UEFI & BIOS)
-- pacstrap /mnt linux linux-firmware base nano grub networkmanager dhcpcd netctl wpa_supplicant dialog (efibootmgr)
+## Mount (BIOS)
+```console
+root@archiso# /dev/sda2 /mnt
+root@archiso# /mnt/boot
+root@archiso# /dev/sda1 /mnt/boot
+```
 
-Generating fstab (UEFI & BIOS)
-- genfstab /mnt >> /mnt/etc/fstab
-- cat /mnt/etc/fstab (to check)
+## Install basic packages (UEFI)
+```console
+root@archiso# pacstrap /mnt linux linux-firmware base nano grub networkmanager dhcpcd netctl wpa_supplicant dialog efibootmgr
+```
 
-Configuration (UEFI & BIOS)
+## Install basic packages (BIOS)
+```console
+root@archiso# pacstrap /mnt linux linux-firmware base nano grub networkmanager dhcpcd netctl wpa_supplicant dialog
+```
+
+## Generate fstab (UEFI & BIOS)
+```console
+root@archiso# genfstab /mnt >> /mnt/etc/fstab
+```
+- Check 
+```console
+root@archiso# cat /mnt/etc/fstab
+# Static information about the filesystems.
+# See fstab(5) for details.
+
+# <file system> <dir> <type> <options> <dump> <pass>
+# UUID=XXXXX-XXXX-XXXX-XXXX-XXXX
+/dev/sda2           	/         	ext4      	rw,relatime	0 1
+...
+```
+
+## Configuration (UEFI & BIOS)
 - arch-chroot /mnt
 - echo YourPCName > /etc/hostname
 - ln -sf /usr/share/zoneinfo/America/Argentina /etc/localtime
