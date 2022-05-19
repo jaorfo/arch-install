@@ -165,11 +165,15 @@ root@archiso# ln -sf /usr/share/zoneinfo/America/Argentina/Buenos_Aires /etc/loc
 root@archiso# nano /etc/locale.gen
 ```
 - Uncomment the distribution you want (in this example: es_AR.UTF8 UTF8)
+<img src="https://github.com/orfoja/img/blob/main/arch-locale.png?raw=true" alt="archlinux" style="width:600px;"/>
 
 - Save file pressing `Ctrl+O` and `Ctrl+X` to exit
 - Execute to generate locale:
 ```console
 root@archiso# locale-gen
+Generating locales...
+    es_AR.UTF8... done
+Generation complete.
 ```
 - Set Clock
 ```console
@@ -182,15 +186,48 @@ root@archiso# echo LANG=es_AR.UTF8 > /etc/locale.conf
 ```
 
 ## Installing GRUB (UEFI)
-- grub-install --efi-directory=/boot/efi --bootloader -id='Arch Linux' --target=x86_64-efi
+- Run `grub-install` with this params
+```console
+root@archiso# grub-install --efi-directory=/boot/efi --bootloader -id='Arch Linux' --target=x86_64-efi
+Installing for x86_64-efi platform
+Installation finished. No error reported.
+```
+- Configure grub
+```console
+root@archiso# grub-mkconfig -o /boot/grub/grub.cfg
+Generating grub installation file...
+Found linux image: /boot/vmlinuz-linux
+Found initrd image: /boot/initramfs-linux.img
+Found fallback initrd image(s) in /boot: initramfs-linux-fallback.img
+Warning: os-prober will not be executed to detect other booteable partitions.
+Systems on them will not be added to the GRUB boot configuration.
+Check GRUB_DISABLE_OS_PROBER documentation entry.
+Adding boot menu entry for UEFI Firmware Settings ...
+done
+```
 
-Installing GRUB (BIOS)
-- grub-install /dev/sda
+## Installing GRUB (BIOS)
+- Run `grub-install` with this params
+```console
+root@archiso# grub-install /dev/sda
+Installing for i386-pc platform
+Installation finished. No error reported.
+```
+- Configure grub
+```console
+root@archiso# grub-mkconfig -o /boot/grub/grub.cfg
+Generating grub installation file...
+Found linux image: /boot/vmlinuz-linux
+Found initrd image: /boot/initramfs-linux.img
+Found fallback initrd image(s) in /boot: initramfs-linux-fallback.img
+Warning: os-prober will not be executed to detect other booteable partitions.
+Systems on them will not be added to the GRUB boot configuration.
+Check GRUB_DISABLE_OS_PROBER documentation entry.
+Adding boot menu entry for ...
+done
+```
 
-Configuring GRUB (UEFI & BIOS)
-- grub-mkconfig -o /boot/grub/grub.cfg
-
-User and Password (UEFI & BIOS)
+## User and Password (UEFI & BIOS)
 root
 - passwd
 - new password: ...
