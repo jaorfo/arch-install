@@ -227,19 +227,30 @@ Adding boot menu entry for ...
 done
 ```
 
-## User and Password (UEFI & BIOS)
-root
-- passwd
-- new password: ...
-user
-- useradd -m username
-- passwd username
-- new password: ...
-- exit
-- umount -R /mnt
-- reboot
+## Root and User configuration (UEFI & BIOS)
+- Set root password
+```console
+root@archiso# passwd
+New password:
+Retype new password:
+passwd: password updated successfully
+```
+- Create user and set password
+```console
+root@archiso# useradd -m your_user_name
+root@archiso# passwd your_user_name
+New password:
+Retype new password:
+passwd: password updated successfully
+```
+- Umount and reboot system
+```console
+root@archiso# exit
+root@archiso# umount -R /mnt
+root@archiso# reboot
+```
 
-Wifi Configuration (UEFI & BIOS)
+## Wifi Configuration (UEFI & BIOS)
 - su
 - systemctl start NetworkManager
 - systemctl enable NetworkManager
