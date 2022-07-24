@@ -312,7 +312,7 @@ Created symlink /etc/systemd/system/network-online.target.wants/NetworkManager-w
 #### Note: This is for Xfce Desktop. Feel free to choose what GE you want (Gnome, KDE, Cinnamon, etc)
 - Install Xfce4, Lightdm and useful apps
 ```console
-[root@your_host_name your_user_name]# pacman -S --needed xorg xfce4 xfce4-goodies lightdm lightdm-gtk-greeter lightdm-gtk-greeter-settings gvfs git libreoffice-still vlc vim neovim transmission-gtk okular gimp
+[root@your_host_name your_user_name]# pacman -S --needed xorg xfce4 xfce4-goodies lightdm lightdm-gtk-greeter lightdm-gtk-greeter-settings gvfs git libreoffice-still vlc vim transmission-gtk okular gimp
 ```
 - Enable DM
 ```console
